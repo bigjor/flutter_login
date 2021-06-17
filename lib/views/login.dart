@@ -1,7 +1,6 @@
 import '../styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,13 +10,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final uuid = Uuid();
+  /* -------------------------------------------------------------------------- */
+  /*                                DECLARATIONS                                */
+  /* -------------------------------------------------------------------------- */
 
   late TextEditingController _nicknameController;
   late TextEditingController _passwordController;
   late FocusNode _nicknameFocus;
   late FocusNode _passwordFocus;
 
+  /* -------------------------------------------------------------------------- */
+  /*                                   METHODS                                  */
+  /* -------------------------------------------------------------------------- */
   @override
   void initState() {
     super.initState();
@@ -39,6 +43,29 @@ class _LoginPageState extends State<LoginPage> {
   void unfocus() {
     _nicknameFocus.unfocus();
     _passwordFocus.unfocus();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   BUILDS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppStyle.primary,
+      body: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: _buildForm()),
+      bottomSheet: Container(
+        color: AppStyle.primary,
+        child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 16.0),
+            child:
+                _buildBottomSupport("Don't have an account?", "Sing up", () {})
+            // _buildBottomSupport("Do you have an invitation?", "Join us", () {})
+            ),
+      ),
+    );
   }
 
   Widget _buildInput(String label, IconData icon,
@@ -111,25 +138,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Widget _buildButton(String label, VoidCallback action) => RaisedButton(
-  //     onTap: action,
-  //     child: Container(
-  //       decoration: AppStyle.kBoxDecorationStyleButton,
-  //       width: double.infinity,
-  //       height: 50.0,
-  //       child: Center(
-  //           child: Text(
-  //         label,
-  //         style: TextStyle(color: Colors.white),
-  //       )),
-  //     ));
   Widget _buildButton(String label, VoidCallback action) => ElevatedButton(
         style: AppStyle.kButtonStyle,
         onPressed: () {},
         child: Text(label, style: TextStyle(color: Colors.white)),
       );
 
-  Widget getForm() => Column(
+  Widget _buildForm() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -151,43 +166,36 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(height: 20.0),
           _buildButton("Log In", () => {}),
           const SizedBox(height: 20.0),
-          Center(
-            child: Text(
-              "Forgot Password",
-              style: TextStyle(color: AppStyle.accent),
+          GestureDetector(
+            onTap: () => {},
+            child: Center(
+              child: Text(
+                "Forgot Password",
+                style: TextStyle(color: AppStyle.accent),
+              ),
             ),
           )
         ],
       );
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppStyle.primary,
-      body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: getForm()),
-      bottomSheet: Container(
-        color: AppStyle.primary,
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text(
-                "Dont have an account?",
-                style: TextStyle(color: Colors.white),
-              ),
-              const SizedBox(width: 4.0),
-              const Text(
-                "Sing up",
-                style: TextStyle(color: AppStyle.accent),
-              )
-            ],
+  Widget _buildBottomSupport(
+          String descriptionlabel, String buttonLabel, VoidCallback action) =>
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          Text(
+            descriptionlabel,
+            style: TextStyle(color: Colors.white),
           ),
-        ),
-      ),
-    );
-  }
+          const SizedBox(width: 4.0),
+          GestureDetector(
+            onTap: action,
+            child: Text(
+              buttonLabel,
+              style: TextStyle(color: AppStyle.accent),
+            ),
+          )
+        ],
+      );
 }
