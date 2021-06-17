@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppStyle {
-  // This class is not meant to be instantiated or extended; this constructor
-  // prevents instantiation and extension.
   AppStyle._();
 
   static const Color primary = Color(0xFF2C2B3F);

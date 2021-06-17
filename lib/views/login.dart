@@ -53,9 +53,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppStyle.primary,
-      body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: _buildForm()),
+      body: Center(
+        child: Container(
+            constraints: BoxConstraints(maxWidth: 500.0),
+            margin: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Center(child: _buildForm())),
+      ),
       bottomSheet: Container(
         color: AppStyle.primary,
         child: Container(
@@ -138,10 +141,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildButton(String label, VoidCallback action) => ElevatedButton(
-        style: AppStyle.kButtonStyle,
-        onPressed: () {},
-        child: Text(label, style: TextStyle(color: Colors.white)),
+  Widget _buildButton(String label, VoidCallback action) => Container(
+        child: ElevatedButton(
+          style: AppStyle.kButtonStyle,
+          onPressed: () {},
+          child: Text(label, style: TextStyle(color: Colors.white)),
+        ),
       );
 
   Widget _buildForm() => Column(
