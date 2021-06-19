@@ -1,4 +1,4 @@
-import './views/login.dart';
+import 'package:login/router/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,10 +11,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const LoginPage());
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      // routes: <String, WidgetBuilder>{
+      //   '/': (BuildContext context) {
+      //     return LoginPage();
+      //   },
+      //   '/register': (BuildContext context) => RegisterPage(),
+      //   '/invitation': (BuildContext context) => InvitationPage()
+      // },
+      // home: const LoginPage()
+    );
   }
 }

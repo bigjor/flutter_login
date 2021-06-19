@@ -1,3 +1,7 @@
+import 'package:login/components/UIButton.dart';
+import 'package:login/components/UIField.dart';
+import 'package:login/components/UIHeader.dart';
+
 import '../styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   /* -------------------------------------------------------------------------- */
   /*                                DECLARATIONS                                */
   /* -------------------------------------------------------------------------- */
-
+  late GlobalKey<FormState> _formKey;
   late TextEditingController _nicknameController;
   late TextEditingController _passwordController;
   late FocusNode _nicknameFocus;
@@ -25,10 +29,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _formKey = GlobalKey<FormState>();
     _nicknameController = new TextEditingController();
     _passwordController = new TextEditingController();
     _nicknameFocus = new FocusNode();
     _passwordFocus = new FocusNode();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      setState(() {
+        _nicknameFocus.requestFocus();
+      });
+    });
   }
 
   @override
@@ -41,8 +52,36 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void unfocus() {
-    _nicknameFocus.unfocus();
-    _passwordFocus.unfocus();
+    setState(() {
+      _nicknameFocus.unfocus();
+      _passwordFocus.unfocus();
+    });
+  }
+
+  void login() {
+    final sbNoData = SnackBar(
+        backgroundColor: Colors.red,
+        content: Text('Put data in the form inputs'));
+
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(sbNoData);
+      return;
+    }
+
+    if (_nicknameController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(sbNoData);
+      return;
+    }
+
+    // STATE LOGGED
+  }
+
+  void signup() {
+    Navigator.pushNamed(context, '/register');
+  }
+
+  void invitation() {
+    Navigator.pushNamed(context, '/invitation');
   }
 
   /* -------------------------------------------------------------------------- */
@@ -64,112 +103,38 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 16.0),
             child:
-                _buildBottomSupport("Don't have an account?", "Sing up", () {})
+                _buildBottomSupport("Don't have an account?", "Sign up", signup)
             // _buildBottomSupport("Do you have an invitation?", "Join us", () {})
             ),
       ),
     );
   }
 
-  Widget _buildInput(String label, IconData icon,
-      TextEditingController controller, FocusNode focus, bool isPassword) {
-    void activate() => setState(() {
-          unfocus();
-          focus.requestFocus();
-        });
-
-    return GestureDetector(
-      onTap: activate,
-      child: Container(
-        alignment: Alignment.bottomLeft,
-        padding: const EdgeInsets.symmetric(vertical: 6.0),
-        decoration: focus.hasFocus
-            ? AppStyle.kBoxDecorationStyleInputActive
-            : AppStyle.kBoxDecorationStyleInput,
-        height: 60.0,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const SizedBox(width: 50.0),
-                Container(
-                  child: Text(
-                    label,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50.0,
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                  ),
-                ),
-                Expanded(
-                    child: Container(
-                  height: 15.0,
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    obscureText: isPassword,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'OpenSans',
-                    ),
-                    // decoration: BoxDecoration(),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    onTap: activate,
-                    onSubmitted: (String token) => {},
-                    onChanged: (String token) => {},
-                    controller: controller,
-                    focusNode: focus,
-                  ),
-                )),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButton(String label, VoidCallback action) => Container(
-        child: ElevatedButton(
-          style: AppStyle.kButtonStyle,
-          onPressed: () {},
-          child: Text(label, style: TextStyle(color: Colors.white)),
-        ),
-      );
-
-  Widget _buildForm() => Column(
+  Widget _buildForm() => Form(
+      key: _formKey,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Login",
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold),
-          ),
-          const Text("Please log in to continue",
-              style: const TextStyle(color: Colors.white, fontSize: 16.0)),
+          UIHeader(title: "Login", description: "Please log in to continue"),
           const SizedBox(height: 20.0),
-          _buildInput("Nickname", Icons.email_outlined, _nicknameController,
-              _nicknameFocus, false),
+          UIField(
+              label: "Nickname",
+              icon: Icons.email_outlined,
+              controller: _nicknameController,
+              focus: _nicknameFocus,
+              unfocus: unfocus,
+              isPassword: false),
           const SizedBox(height: 20.0),
-          _buildInput("Password", Icons.lock, _passwordController,
-              _passwordFocus, true),
+          UIField(
+              label: "Password",
+              icon: Icons.lock,
+              controller: _passwordController,
+              focus: _passwordFocus,
+              unfocus: unfocus,
+              isPassword: true),
           const SizedBox(height: 20.0),
-          _buildButton("Log In", () => {}),
+          UIButton(label: "Log In", action: login),
           const SizedBox(height: 20.0),
           GestureDetector(
             onTap: () => {},
@@ -181,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )
         ],
-      );
+      ));
 
   Widget _buildBottomSupport(
           String descriptionlabel, String buttonLabel, VoidCallback action) =>
