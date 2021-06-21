@@ -71,10 +71,10 @@ class _RegisterPageState extends State<RegisterPage> {
       content: Text('Passwords do not match'),
       duration: Duration(seconds: 2),
       // action: SnackBarAction(
-      //   label: 'Close',
-      //   textColor: Colors.white,
-      //   onPressed: () {},
-      // ),
+      // //   label: 'Close',
+      // //   textColor: Colors.white,
+      // //   onPressed: () {},
+      // // ),
     );
 
     if (!_formKey.currentState!.validate()) {

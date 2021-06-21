@@ -103,9 +103,9 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 16.0),
             child:
-                _buildBottomSupport("Don't have an account?", "Sign up", signup)
-            // _buildBottomSupport("Do you have an invitation?", "Join us", () {})
-            ),
+                // _buildBottomSupport("Don't have an account?", "Sign up", signup)
+                _buildBottomSupport(
+                    "Do you have an invitation?", "Join us", invitation)),
       ),
     );
   }
