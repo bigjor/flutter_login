@@ -94,10 +94,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: AppStyle.primary,
       body: Center(
-        child: Container(
-            constraints: BoxConstraints(maxWidth: 500.0),
-            margin: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Center(child: _buildForm())),
+        child: SingleChildScrollView(
+          child: Container(
+              constraints: BoxConstraints(maxWidth: 500.0),
+              margin: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: Center(child: _buildForm())),
+        ),
       ),
       bottomSheet: Container(
         color: AppStyle.primary,

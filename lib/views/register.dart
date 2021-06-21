@@ -56,13 +56,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void unfocus() {
-    setState(() {
-      _fullNameFocus.unfocus();
-      _phoneFocus.unfocus();
-      _emailFocus.unfocus();
-      _passwordFocus.unfocus();
-      _confirmPasswordFocus.unfocus();
-    });
+    if (mounted)
+      setState(() {
+        _fullNameFocus.unfocus();
+        _phoneFocus.unfocus();
+        _emailFocus.unfocus();
+        _passwordFocus.unfocus();
+        _confirmPasswordFocus.unfocus();
+      });
   }
 
   void login() {
@@ -117,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppStyle.primary,
-        body: Column(
+        body: Stack(
           children: [
             Row(children: [
               Padding(
@@ -132,10 +133,12 @@ class _RegisterPageState extends State<RegisterPage> {
             ]),
             Expanded(
                 child: Center(
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 500.0),
-                margin: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Center(child: _buildForm()),
+              child: SingleChildScrollView(
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 500.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Center(child: _buildForm()),
+                ),
               ),
             )),
           ],
