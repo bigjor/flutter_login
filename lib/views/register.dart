@@ -46,12 +46,24 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailFocus = new FocusNode();
     _passwordFocus = new FocusNode();
     _confirmPasswordFocus = new FocusNode();
+
+    // Establece el focus del primer elemento una vez se ha acabado el build
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      setState(() {
+        _fullNameFocus.requestFocus();
+      });
+    });
   }
 
   void unfocus() {
-    setState(() {
-      _fullNameFocus.unfocus();
-    });
+    if (mounted)
+      setState(() {
+        _fullNameFocus.unfocus();
+        _phoneFocus.unfocus();
+        _emailFocus.unfocus();
+        _passwordFocus.unfocus();
+        _confirmPasswordFocus.unfocus();
+      });
   }
 
   void login() {
@@ -66,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
       // ),
     );
 
-    final sbNotMach = SnackBar(
+    final sbNotMatch = SnackBar(
       backgroundColor: Colors.red,
       content: Text('Passwords do not match'),
       duration: Duration(seconds: 2),
@@ -92,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     if (_passwordController != _confirmPasswordController) {
-      ScaffoldMessenger.of(context).showSnackBar(sbNotMach);
+      ScaffoldMessenger.of(context).showSnackBar(sbNotMatch);
     }
 
     // STATE LOGGED
@@ -106,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppStyle.primary,
-        body: Column(
+        body: Stack(
           children: [
             Row(children: [
               Padding(
@@ -121,10 +133,12 @@ class _RegisterPageState extends State<RegisterPage> {
             ]),
             Expanded(
                 child: Center(
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 500.0),
-                margin: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Center(child: _buildForm()),
+              child: SingleChildScrollView(
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 500.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Center(child: _buildForm()),
+                ),
               ),
             )),
           ],
