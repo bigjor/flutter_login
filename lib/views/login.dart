@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     _nicknameFocus = new FocusNode();
     _passwordFocus = new FocusNode();
 
+    // Establece el focus del primer elemento una vez se ha acabado el build
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() {
         _nicknameFocus.requestFocus();

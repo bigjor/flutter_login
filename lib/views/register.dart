@@ -46,11 +46,22 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailFocus = new FocusNode();
     _passwordFocus = new FocusNode();
     _confirmPasswordFocus = new FocusNode();
+
+    // Establece el focus del primer elemento una vez se ha acabado el build
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      setState(() {
+        _fullNameFocus.requestFocus();
+      });
+    });
   }
 
   void unfocus() {
     setState(() {
       _fullNameFocus.unfocus();
+      _phoneFocus.unfocus();
+      _emailFocus.unfocus();
+      _passwordFocus.unfocus();
+      _confirmPasswordFocus.unfocus();
     });
   }
 
@@ -66,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
       // ),
     );
 
-    final sbNotMach = SnackBar(
+    final sbNotMatch = SnackBar(
       backgroundColor: Colors.red,
       content: Text('Passwords do not match'),
       duration: Duration(seconds: 2),
@@ -92,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     if (_passwordController != _confirmPasswordController) {
-      ScaffoldMessenger.of(context).showSnackBar(sbNotMach);
+      ScaffoldMessenger.of(context).showSnackBar(sbNotMatch);
     }
 
     // STATE LOGGED
