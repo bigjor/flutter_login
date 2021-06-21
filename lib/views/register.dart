@@ -3,7 +3,6 @@ import 'package:login/components/UIField.dart';
 import 'package:login/components/UIHeader.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import '../styles/styles.dart';
 
@@ -172,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 20.0),
             UIField(
               label: "Password",
-              icon: Entypo.key,
+              icon: Icons.zoom_out_sharp, // Entypo.key,
               controller: _passwordController,
               focus: _passwordFocus,
               unfocus: unfocus,
@@ -181,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 20.0),
             UIField(
               label: "Confirm Password",
-              icon: Entypo.key,
+              icon: Icons.zoom_out_sharp,
               controller: _confirmPasswordController,
               focus: _confirmPasswordFocus,
               unfocus: unfocus,
