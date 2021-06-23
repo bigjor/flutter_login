@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:login/components/UIButton.dart';
-import 'package:login/components/UIField.dart';
-import 'package:login/components/UIHeader.dart';
-import 'package:login/styles/styles.dart';
+import 'package:flutter/material.dart';
+
+import '../components/UIButton.dart';
+import '../components/UIField.dart';
+import '../components/UIHeader.dart';
+import '../styles/styles.dart';
 
 class InvitationPage extends StatefulWidget {
   const InvitationPage({Key? key}) : super(key: key);

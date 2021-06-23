@@ -1,7 +1,10 @@
+import 'package:provider/src/provider.dart';
 import 'package:flutter/material.dart';
+import '../state/LoginState.dart';
 import '../views/invitation.dart';
 import '../views/register.dart';
 import '../views/login.dart';
+import '../views/home.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -9,7 +12,10 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => LoginPage());
+        return MaterialPageRoute(
+            builder: (context) => context.watch<LoginState>().isLogged
+                ? HomePage()
+                : LoginPage());
       case '/register':
         return MaterialPageRoute(builder: (context) => RegisterPage());
       case '/invitation':
@@ -21,8 +27,11 @@ class RouteGenerator {
 
   static Route<dynamic> _errorRoutePage() {
     return MaterialPageRoute(
-        builder: (context) => Scaffold(
-              body: Center(child: Text("Pagina no encontrada")),
-            ));
+      builder: (context) => Scaffold(
+        body: Center(
+          child: Text("Pagina no encontrada"),
+        ),
+      ),
+    );
   }
 }

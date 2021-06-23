@@ -1,10 +1,12 @@
-import 'package:login/components/UIButton.dart';
-import 'package:login/components/UIField.dart';
-import 'package:login/components/UIHeader.dart';
-
-import '../styles/styles.dart';
-import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../components/UIButton.dart';
+import '../components/UIField.dart';
+import '../components/UIHeader.dart';
+import '../state/LoginState.dart';
+import '../styles/styles.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -75,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     // STATE LOGGED
+    context.read<LoginState>().login();
   }
 
   void signup() {

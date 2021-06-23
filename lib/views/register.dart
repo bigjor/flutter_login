@@ -1,9 +1,8 @@
-import 'package:login/components/UIButton.dart';
-import 'package:login/components/UIField.dart';
-import 'package:login/components/UIHeader.dart';
-
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter/material.dart';
+
+import '../components/UIButton.dart';
+import '../components/UIField.dart';
+import '../components/UIHeader.dart';
 import '../styles/styles.dart';
 
 class RegisterPage extends StatefulWidget {

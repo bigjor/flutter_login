@@ -1,8 +1,17 @@
-import 'package:login/router/router.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import './state/LoginState.dart';
+import './router/router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LoginState()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
