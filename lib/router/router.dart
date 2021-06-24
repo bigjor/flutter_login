@@ -12,10 +12,11 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(
-            builder: (context) => context.watch<LoginState>().isLogged
-                ? HomePage()
-                : LoginPage());
+        return MaterialPageRoute(builder: (context) {
+          return context.watch<LoginState>().isLogged
+              ? HomePage()
+              : LoginPage();
+        });
       case '/register':
         return MaterialPageRoute(builder: (context) => RegisterPage());
       case '/invitation':

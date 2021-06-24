@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<LoginState>().loadStateApp();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

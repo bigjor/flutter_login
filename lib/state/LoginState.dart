@@ -6,10 +6,7 @@ class LoginState with ChangeNotifier, DiagnosticableTreeMixin {
   /* -------------------------------------------------------------------------- */
   /*                           INSTANCES & CONSTRUCTOR                          */
   /* -------------------------------------------------------------------------- */
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  LoginState() {
-    loadIsLogged();
-  }
+  late SharedPreferences _prefs;
 
   /* -------------------------------------------------------------------------- */
   /*                                DECLARATIONS                                */
@@ -37,14 +34,18 @@ class LoginState with ChangeNotifier, DiagnosticableTreeMixin {
   /* -------------------------------------------------------------------------- */
   /*                                PREFS METHODS                               */
   /* -------------------------------------------------------------------------- */
-  void saveIsLogged() async {
-    final prefs = await _prefs;
-    prefs.setBool("isLogged", isLogged);
+  void loadStateApp() async {
+    _prefs = await SharedPreferences.getInstance();
+    loadIsLogged();
+    notifyListeners();
   }
 
-  void loadIsLogged() async {
-    final prefs = await _prefs;
-    _isLogged = prefs.getBool("isLogged") ?? false;
+  void saveIsLogged() {
+    _prefs.setBool("isLogged", isLogged);
+  }
+
+  void loadIsLogged() {
+    _isLogged = _prefs.getBool("isLogged") ?? false;
   }
 
   /// Makes `LoginState` readable inside the devtools by listing all of its properties
